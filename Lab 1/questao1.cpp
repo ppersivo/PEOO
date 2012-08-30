@@ -12,7 +12,7 @@
 /*
  * Arquivo: questao1.cpp
  * ------------------------------
- * Calcula PI com aproximacao 'n' atraves da Serie de Leibniz.
+ * Calcula uma aproximacao de PI atraves da Serie de Leibniz.
  * Entrada: Aproximacao desejada pelo usuario.
  * Saida: Valor de PI com a aproximacao escolhida pelo usuario.
  */
@@ -29,19 +29,16 @@ void error(std::string msg);
 
 /* Programa principal */
 int main(){
-    int aprox = 0;
-    long double pi = 0.0;
 
-    aprox = getDesiredAproximation();
-    pi = calculatePi(aprox);
-    showAnswer(aprox,pi);
+    int aprox = getDesiredAproximation();
+
+    showAnswer(aprox,calculatePi(aprox));
 
     return 0;
 }
 
 /*
  * Funcao: GetDesiredAproximation()
- * Uso:
  * ------------------------------
  * Essa funcao solicita ao usuario que especifique a quantidade
  * de termos da Serie de Leibniz para a aproximacao de PI.
@@ -62,9 +59,9 @@ int getDesiredAproximation(){
 
 /*
  * Funcao: CalculatePi()
- * Uso: CalculatePi();
  * ------------------------------
  * Essa funcao calcula o valor de PI atraves da Serie de Leibniz
+ * com a quantidade de termos solicitada pelo usuario.
  */
 long double calculatePi(int aproximation){
     long double pi = 0.0;
@@ -84,9 +81,9 @@ long double calculatePi(int aproximation){
 
 /*
  * Funcao: showAnswer()
- * Uso: showAnswer();
  * ------------------------------
- * Essa funcao exibe o valor de PI calculado.
+ * Essa funcao exibe o valor de PI calculado pela Serie de Leibniz
+ * e a quantidade de termos da serie escolhida pelo usuario.
  */
 void showAnswer(int aproximation, long double pi){
     std::cout << "PI, aproximado por " << aproximation << " termos da Serie de Leibniz:" << std::endl;

@@ -12,7 +12,7 @@
 /*
  * Arquivo: questao3.cpp
  * ------------------------------
- *Calcula da raiz digital de um dado argumento.
+ * Calcula da raiz digital de um dado argumento.
  * Entrada: Numero para calcular a raiz digital.
  * Saida: Raiz digital do numero escolhido pelo usuario.
  */
@@ -22,11 +22,11 @@
 
 using namespace std;
 
+/* Prototipo das funcoes */
 int getNumber();
 int somaDigitos(int number);
 int raizDigital(int number);
 void showResult(int number, int raiz);
-void error(int msg);
 
 int main(){
     int number;
@@ -40,10 +40,8 @@ int main(){
 }
 
 /*
- * Funcao: getNumber();
- * Uso: int number = getNumber();
- * ------------------------------
- * Esta funcao requisita um numero ao usuario para calcular a raiz digital do mesmo
+ * Esta funcao requisita um numero ao usuario para calcular a raiz digital do mesmo.
+ * Saida: O numero fornecido pelo usuario.
  */
 int getNumber(){
     int number = 0;
@@ -56,13 +54,12 @@ int getNumber(){
 }
 
 /*
- * Funcao: somaDigitos()
- * Uso: int soma = somaDigitos(int number)
- * ------------------------------
  * Esta funcao soma os digitos de um numero passado como argumento.
+ * Usada por raizDigital() para somar os digitos em cada fase do calculo.
  */
 int somaDigitos(int number){
-    int soma = number%10;
+    int soma = number % 10;
+
     if( number/10 > 0 ){
         soma += somaDigitos(number/10);
     }
@@ -70,9 +67,6 @@ int somaDigitos(int number){
 }
 
 /*
- * Funcao: raizDigital()
- * Uso: int raiz = raizDigital(int number)
- * ------------------------------
  * Esta funcao calcula a raiz digital do numero passado como argumento.
  */
 int raizDigital(int number){
@@ -88,22 +82,8 @@ int raizDigital(int number){
 }
 
 /*
- * Funcao: showResult()
- * Uso: showResult(int number, int raiz)
- * ------------------------------
- * Esta funcao exibe o resultado da raiz digital do numero dado.
+ * Esta funcao exibe o resultado da execucao do programa.
  */
 void showResult(int number, int raiz){
     cout << "Raiz digital de " << number << " : " << raiz << endl;
-}
-
-/*
- * Funcao: error()
- * Uso: error();
- * ------------------------------
- * Essa funcao exibe uma mensagem de erro.
- */
-void error(string msg){
-    cerr << msg << endl;
-    exit(EXIT_FAILURE);
 }

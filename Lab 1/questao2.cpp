@@ -18,114 +18,131 @@
  */
 
 #include <iostream>
-#include <cstdlib>  // Para as  funcoes rand(), srand() e exit().
+#include <cstdlib>  // Para as  funcoes rand() e srand().
 #include <time.h>   // Para a funcao time().
 
+using std::cout;
+using std::endl;
+
+/* Prototipos das funcoes */
 void initRandomSeed();
 long double randomReal(long double low, long double high);
 long double calcularPi(int quantidade);
 bool lancarDardo();
 void showResult(int quantidade, long double pi);
-void error(std::string msg);
 
-int main(){
-    long double pi = 0.0;
-    int quantidade = 10000;
 
-    pi = calcularPi(quantidade);
-    showResult(quantidade, pi);
+int
+main()
+{
+    showResult(10000, calcularPi(10000));
 
     return 0;
 }
 
 /*
- * Funcao:
- * Uso:
- * ------------------------------
- * Calcula o valor de PI pela integracao de Monte Carlo
+ * Calcula o valor de PI pela integracao de Monte Carlo.
+ * Entrada: Recebe como argumento o numero de vezes que um dardo
+ *          deve ser lancado para calcular a aproximacao de PI.
+ * Saída: O valor aproximado de PI.
  */
-long double calcularPi(int quantidade){
+long double
+calcularPi(int quantidade)
+{
     bool acertouAlvo = false;
-    double alvo = 0.0;
+    double alvo = 0.0;          // Numero de dardos que acertaram o alvo.
 
-    for(int i=0;i<quantidade;i++){
+    // Lancamento dos dardos e contagem dos acertos.
+    for (int i=0;i<quantidade;i++)
+      {
+
         acertouAlvo = lancarDardo();
-        if(acertouAlvo){
-            alvo += 1.0;
-        }
-    }
 
+        if (acertouAlvo)
+          {
+            alvo += 1.0;
+          }
+
+      }
+
+    // Calculando o valor de PI e retornando-o.
     return 4.0*(alvo/quantidade);
 }
 
 /*
- * Funcao:
- * Uso:
- * ------------------------------
- * Inicializa a semente para geração de numeros aleatorios.
+ * Inicializa a semente para geracao de numeros aleatorios.
+ * Utilizada por randomReal().
  */
-void initRandomSeed() {
+void
+initRandomSeed()
+{
     static bool initialized = false;
-    if (!initialized) {
+
+    if (!initialized)
+      {
         srand(int(time(NULL)));
         initialized = true;
-    }
+      }
 }
 
 /*
- * Funcao:
- * Uso:
- * ------------------------------
- * Gera um numero long double aleatório.
+ * Gera um numero aleatório do tipo long double.
+ * Utilizada por lancarDardo().
+ * Entrada: Valores inicial e final do intervalo em que o numero
+ *          aleatorio gerado deve estar.
+ * Saida: Numero aleatorio do tipo long double no intervalo especificado.
  */
-long double randomReal(long double low, long double high) {
+long double
+randomReal(long double low, long double high)
+{
     initRandomSeed();
 
-    long double d = rand() / (double(RAND_MAX) + 1);
-    long double s = d * (high - low);
-    return low + s;
+    long double d = (rand() / (double(RAND_MAX) + 1));
+    long double s = (d * (high - low));
+
+    return (low + s);
 }
 
 /*
- * Funcao:
- * Uso:
- * ------------------------------
  * Simula o lancamento de dardos em uma placa tamanho 2x2 e alvo de raio 1
  * com centro em (0,0)
+ * Saida: Retorna TRUE se o dardo ACERTOU o alvo.
+          Retorna FALSE se o dardo ERROU o alvo.
  */
-bool lancarDardo(){
+bool
+lancarDardo()
+{
+    // A placa que sustenta o alvo tem lado de tamanho 2.
+    // Portanto os numeros aleatorios estarao na faixa 0..2 .
     long double x = randomReal(0, 2.0);
     long double y = randomReal(0, 2.0);
 
+    // Posicionando o centro da placa no ponto (0,0).
     x -= 1;
     y -= 1;
 
-    if((x*x + y*y) < 1.0){
+    // Verificando se o dardo acertou o alvo.
+    // O alvo eh um circulo de raio 1.
+    bool noAlvo = (x*x + y*y) < 1.0;
+
+    if (noAlvo)
+      {
+        // Se acertou o alvo.
         return true;
-    }
+      }
 
     return false;
 }
 
 /*
- * Funcao:
- * Uso:
- * ------------------------------
  * Exibe o resultado do programa na tela.
+ * Entrada: Quantidade de lancamentos e o valor aproximado de PI.
  */
-void showResult(int quantidade, long double pi){
-    std::cout.precision(10);
-    std::cout << "O valor de PI, por Integracao de Monte Carlo, " << std::endl;
-    std::cout << "com " << quantidade << " lancamentos: " << pi << std::endl;
-}
+void
+showResult(int quantidade, long double pi)
+{
+    cout.precision(10);
 
-/*
- * Funcao: error()
- * Uso: error();
- * ------------------------------
- * Essa funcao exibe uma mensagem de erro.
- */
-void error(std::string msg){
-    std::cerr << msg << std::endl;
-    std::exit(EXIT_FAILURE);
+    cout << "O valor de PI, por Integracao de Monte Carlo, " << endl;
+    cout << "com " << quantidade << " lancamentos: " << pi << endl;
 }
